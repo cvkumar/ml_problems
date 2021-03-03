@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import tensorflow as tf
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn import preprocessing
@@ -69,12 +70,12 @@ x_train, x_test, y_train, y_test = train_test_split(
     X, Y, stratify=Y, test_size=VALIDATION_SIZE, random_state=RANDOM_STATE
 )
 
-model.fit(
-    {"sex": x_train["sex"], "p_class": x_train["p_class"], "fare": x_train["fare"], "embarked_q": x_train['embarked_q'], "embarked_s": x_train["embarked_s"]},
-    {"survived": y_train["survived"]},
-    epochs=200,
-    # batch_size=16,
-)
+# model.fit(
+#     {"sex": x_train["sex"], "p_class": x_train["p_class"], "fare": x_train["fare"], "embarked_q": x_train['embarked_q'], "embarked_s": x_train["embarked_s"]},
+#     {"survived": y_train["survived"]},
+#     epochs=200,
+#     # batch_size=16,
+# )
 
 print("evaluate")
 
@@ -85,10 +86,19 @@ model.evaluate(
 
 print("")
 
+
+random_forest = RandomForestClassifier(n_estimators=100, oob_score = True)
+random_forest.fit(x_train, y_train)
+Y_prediction = random_forest.predict(x_test)
+
+random_forest.score(x_train, y_train)
+
 """
 sources:
 
 https://towardsdatascience.com/predicting-the-survival-of-titanic-passengers-30870ccc7e8
 - What inputs matter
 
+
 """
+# TODO: https://www.kaggle.com/theblackmamba31/titanic-tutorial-neural-network
