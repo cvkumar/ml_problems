@@ -1,0 +1,16 @@
+
+Assignment Repos
+https://github.com/willzma/CS4641-Machine-Learning/blob/master/4.%20MDPs%20and%20Reinforcement%20Learning/wma61-analysis.pdf
+https://github.com/cmaron/CS-7641-assignments/tree/master/assignment4
+
+https://github.com/openai/gym
+- Library for Environments
+
+https://medium.com/analytics-vidhya/solving-the-frozenlake-environment-from-openai-gym-using-value-iteration-5a078dffe438
+-Solve Frozen Lake using Value Iteration
+
+https://medium.com/analytics-vidhya/solving-the-frozenlake-environment-from-openai-gym-using-value-iteration-5a078dffe438
+-Value iteration implementation kinda ugly
+
+https://towardsdatascience.com/reinforcement-learning-demystified-solving-mdps-with-dynamic-programming-b52c8093c919
+-Value iteration implementation clean, but different problem

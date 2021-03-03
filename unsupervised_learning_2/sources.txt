@@ -1,0 +1,14 @@
+
+Assignments:
+http://www.dudonwai.com/docs/gt-omscs-cs7641-a3.pdf?pdf=gt-omscs-cs7641-a3
+https://github.com/danielcy715/CS7641-Machine-Learning/blob/master/Assignment3/ycai87-analysis.pdf
+https://github.com/niranjantdesai/cs-7641-machine-learning/blob/master/assgn3-unsupervised_learning/code/unsupervised_learning_1.ipynb
+
+http://www.blackarbs.com/blog/intro-to-expectation-maximization-k-means-gaussian-mixture-models-with-python-sklearn/3/20/2017
+- Good explanation of expectation maximization
+
+https://towardsdatascience.com/clustering-metrics-better-than-the-elbow-method-6926e1f723a6
+-talks about elbow score vs. silhouette score (recommends latter)
+
+https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation
+-What metrics are best for cluster evaluation

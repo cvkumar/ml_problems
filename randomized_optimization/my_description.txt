@@ -1,0 +1,14 @@
+3 Problems
+4 Algorithms
+
+Each algorithm applied to each problem
+
+Problem is just a fitness function trying to maximize (as opposed to a cost function one is trying to minimize).
+Chosen problems should be over discrete-valued parameter spaces. Bit strings are preferable.
+
+problem 1 - highlight genetic algorithm
+problem 2 - highlight simulated annealing
+problem 3 - highlight mimic algorithm
+
+Use randomized hill climbing, simulated annealing, genetic algorithm, to find weights for neural network replacing
+backpropagation.

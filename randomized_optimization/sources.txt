@@ -1,0 +1,8 @@
+
+Other Papers
+https://papers.nips.cc/paper/1328-mimic-finding-optima-by-estimating-probability-densities.pdf
+https://github.com/neilbarooah/Randomized-Optimization/blob/master/nbarooah3-analysis.pdf
+https://chappers.github.io/data/a-comparison-of-randomized-optimization-methods.pdf
+
+Runners:
+https://github.com/hiive/mlrose/blob/master/mlrose_hiive/runners/

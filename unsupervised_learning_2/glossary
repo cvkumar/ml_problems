@@ -1,0 +1,19 @@
+Silhouette Score: Essentially takes mean distance between given sample and all other points in cluster and then the same for the nearest cluster. Then takes this mean across all samples.
+-The score is higher when clusters are dense and well separated, which relates to a standard concept of a cluster.
+-The score is bounded between -1 for incorrect clustering and +1 for highly dense clustering. Scores around zero indicate overlapping clusters.
+
+AIC/BIC score
+-A lower AIC score is better.
+-Penalizes for more clusters
+-Used for comparing models not fit itself
+-The lower is the BIC, the better is the model to actually predict the data we have, and by extension, the true, unknown, distribution
+-Steeper Slope is better
+
+Log Likelihood
+-
+
+Homogeneity/Completeness Score
+-N
+Adjusted Rand Index: measures the similarity of the two assignments, ignoring permutations and with chance normalization
+- 1 is best, random labels would get 0, bad labels get -1
+
