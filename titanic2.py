@@ -25,8 +25,8 @@ X = pd.DataFrame(
         "sex": df["Sex_male"],
         "p_class": df["Pclass"],
         "fare": df["Fare"],
-        "embarked_q": df['Embarked_Q'],
-        "embarked_s": df['Embarked_S'],
+        "embarked_q": df["Embarked_Q"],
+        "embarked_s": df["Embarked_S"],
     }
 )
 Y = pd.DataFrame(data={"survived": df["Survived"]})
@@ -50,7 +50,8 @@ x = layers.concatenate([sex_input, p_class_input, fare_input, embarked_q, embark
 survived_prediction = layers.Dense(2, name="survived", activation="softmax")(x)
 
 model = keras.Model(
-    inputs=[sex_input, p_class_input, fare_input, embarked_s, embarked_q], outputs=[survived_prediction],
+    inputs=[sex_input, p_class_input, fare_input, embarked_s, embarked_q],
+    outputs=[survived_prediction],
 )
 
 # model.compile(
@@ -80,14 +81,20 @@ x_train, x_test, y_train, y_test = train_test_split(
 print("evaluate")
 
 model.evaluate(
-    {"sex": x_test["sex"], "p_class": x_test["p_class"], "fare": x_test["fare"], "embarked_q": x_test['embarked_q'], "embarked_s": x_test["embarked_s"]},
+    {
+        "sex": x_test["sex"],
+        "p_class": x_test["p_class"],
+        "fare": x_test["fare"],
+        "embarked_q": x_test["embarked_q"],
+        "embarked_s": x_test["embarked_s"],
+    },
     {"survived": y_test["survived"]},
 )
 
 print("")
 
 
-random_forest = RandomForestClassifier(n_estimators=100, oob_score = True)
+random_forest = RandomForestClassifier(n_estimators=100, oob_score=True)
 random_forest.fit(x_train, y_train)
 Y_prediction = random_forest.predict(x_test)
 

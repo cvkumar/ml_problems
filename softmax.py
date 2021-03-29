@@ -21,5 +21,6 @@ def compute_softmax(vector: List[float]) -> List[float]:
     total = sum(list_e_x)
     return [e_x / total for e_x in list_e_x]
 
+
 if __name__ == "__main__":
     print(compute_softmax([8, 5, 0]))

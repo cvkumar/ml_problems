@@ -9,7 +9,7 @@ otherwise output 0
 RANDOM_STATE = 12
 random.seed(RANDOM_STATE)
 
-INPUT_DATA_LENGTH = 1000
+INPUT_DATA_LENGTH = 10000
 
 X1 = [random.randint(1, 9) for num in range(INPUT_DATA_LENGTH)]
 X2 = [random.randint(1, 9) for num in range(INPUT_DATA_LENGTH)]
@@ -17,17 +17,18 @@ X3 = [random.randint(1, 9) for num in range(INPUT_DATA_LENGTH)]
 
 Y = []
 for i in range(INPUT_DATA_LENGTH):
-    # Y.append(X1[i] - X2[i] + X3[i])
-    if X1[i] + X2[i] + X3[i] > 13.5:
-        Y.append(1)
-    else:
-        Y.append(0)
+    Y.append(X1[i] + X2[i] + X3[i])
+    # if X1[i] + X2[i] + X3[i] > 13.5:
+    #     Y.append(1)
+    # else:
+    #     Y.append(0)
 
 
 # print(X)
 # print(W)
 # print(Z)
 # print(Y)
+
 
 class NeuralNetwork:
     def __init__(self, learning_rate=0.01):
@@ -40,7 +41,9 @@ class NeuralNetwork:
         for i in range(INPUT_DATA_LENGTH):
 
             if i % 50 == 0:
-                print(f"at step i: {i} weight1: {self.w1}, weight2: {self.w2}, weight3: {self.w3}")
+                print(
+                    f"at step i: {i} weight1: {self.w1}, weight2: {self.w2}, weight3: {self.w3}"
+                )
 
             output = self._compute_output(x1[i], x2[i], x3[i])
 
@@ -65,10 +68,12 @@ class NeuralNetwork:
 
     def _compute_output(self, a, b, c):
         output = self.w1 * a + self.w2 * b + self.w3 * c
-        if output > 0:
-            output = 1
-        else:
-            output = 0
+
+        # Is this the activation function?
+        # if output > 0:
+        #     output = 1
+        # else:
+        #     output = 0
         return output
 
 
