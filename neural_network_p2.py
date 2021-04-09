@@ -86,7 +86,6 @@ class NeuralNetwork:
         return output * (1.0 - output)
 
     def backward_propogate_error(self, expected):
-        # for i in reversed(range(len(self.output_layer))):
         layer = self.output_layer
         output_layer_errors = []
 
@@ -102,20 +101,12 @@ class NeuralNetwork:
         for j in range(len(self.hidden_layer)):
             error = 0.0
             for neuron in self.output_layer:
-                # neuron delta: -0.14619064683582808 <- This VAL must be correct
-                # neuron weights: 0.2550690257394217
                 error += (neuron.weights[j] * neuron.delta)
             hidden_layer_errors.append(error)
 
         for j in range(len(self.hidden_layer)):
             neuron = self.hidden_layer[j]
             neuron.delta = hidden_layer_errors[j] * self.transfer_derivative(neuron.output)
-
-        # print(errors)
-        # for j in range(len(self.hidden_layer)):
-
-
-
 
     def __str__(self):
         hidden_layer = f"hidden_layer: {[str(neuron) for neuron in self.hidden_layer]}"
@@ -143,6 +134,7 @@ sample_expected_output = [0, 1]
 network = [[{'output': 0.7105668883115941, 'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614]}],
 		[{'output': 0.6213859615555266, 'weights': [0.2550690257394217, 0.49543508709194095]}, {'output': 0.6573693455986976, 'weights': [0.4494910647887381, 0.651592972722763]}]]
 """
+
 network.hidden_layer = [Neuron(weights=[0.13436424411240122, 0.8474337369372327], bias=0.763774618976614, output=0.7105668883115941)]
 network.output_layer = [Neuron(weights=[0.2550690257394217], bias=0.49543508709194095, output=0.6213859615555266), Neuron(weights=[0.4494910647887381], bias=0.651592972722763, output=0.6573693455986976)]
 network.backward_propogate_error(sample_expected_output)
