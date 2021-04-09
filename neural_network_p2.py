@@ -23,9 +23,11 @@ class Neuron:
     def __init__(self, weights, bias=None):
         self.bias = bias or random.random()
         self.weights = weights
+        self.delta = 0
+        self.output = 0
 
     def __str__(self):
-        return f"weights: {self.weights}, bias: {self.bias}"
+        return f"weights: {self.weights}, bias: {self.bias}, delta: {self.delta}, output: {self.output}"
 
 
 class NeuralNetwork:
@@ -63,30 +65,73 @@ class NeuralNetwork:
         hidden_layer_outputs = []
         for neuron in self.hidden_layer:
             activation_value = self.activate(weights=neuron.weights, inputs=inputs, bias=neuron.bias)
-            neuron_output = self.transfer_activation_value(activation_value)
-            hidden_layer_outputs.append(neuron_output)
+            neuron.output = self.transfer_activation_value(activation_value)
+            hidden_layer_outputs.append(neuron.output)
 
         final_outputs = []
         for neuron in self.output_layer:
             activation_value = self.activate(weights=neuron.weights, inputs=hidden_layer_outputs, bias=neuron.bias)
-            neuron_output = self.transfer_activation_value(activation_value)
-            final_outputs.append(neuron_output)
+            neuron.output = self.transfer_activation_value(activation_value)
+            final_outputs.append(neuron.output)
 
         return final_outputs
+
+    def transfer_derivative(self, output):
+        """
+        output ~ Output of neuron
+        Calculates derivative with respect to sigmoid transfer function
+
+        # TODO: add comment for what delta
+        """
+        return output * (1.0 - output)
+
+    def backward_propogate_error(self, expected):
+        # for i in reversed(range(len(self.output_layer))):
+        layer = self.output_layer
+        errors = []
+
+        for j in range(len(self.output_layer)):
+            neuron = layer[j]
+            errors.append(expected[j] - neuron.output)
+
+        for j in range(len(self.output_layer)):
+            neuron = layer[j]
+            neuron.delta = errors[j] * self.transfer_derivative(neuron.output)
+
+        for j in range(len(self.hidden_layer)):
+            error = 0.0
+            for neuron in self.output_layer:
+                error += (neuron.weights[j] * neuron.delta)
+            errors.append(error)
+
+        for j in range(len(self.hidden_layer)):
+            neuron = self.hidden_layer[j]
+            neuron.delta = errors[j] * self.transfer_derivative(neuron.output)
+
+        print(errors)
+        # for j in range(len(self.hidden_layer)):
+
+
+
 
     def __str__(self):
         hidden_layer = f"hidden_layer: {[str(neuron) for neuron in self.hidden_layer]}"
         output_layer = f"output_layer: {[str(neuron) for neuron in self.output_layer]}"
         return f"{hidden_layer}\n{output_layer}"
 
-
-network = NeuralNetwork(n_inputs=2, n_hidden=2, n_outputs=2)
+network = NeuralNetwork(n_inputs=2, n_hidden=1, n_outputs=2)
 print(network)
-print("\n")
+print("")
 
 sample_input = [1, 0]
 result = network.forward_propogate(sample_input)
+print("Forward propogate result")
 print(result)
+print("")
 
-
+sample_expected_output = [0, 1]
+network.backward_propogate_error(sample_expected_output)
+print("network after back propogating")
+print(network)
+print("")
 
