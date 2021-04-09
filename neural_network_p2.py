@@ -45,8 +45,34 @@ class NeuralNetwork:
     def _generate_weights(self, n_weights: int) -> list:
         return [random.random() for i in range(n_weights)]
 
-    def activate(self, inputs, weights):
-        pass
+    def activate(self, weights, inputs, bias):
+        """
+        Basically given a neuron and inputs, compute the result of activating the neuron
+        """
+        # This is literally regression x)
+        result = bias
+        for i in range(len(weights)):
+            result += inputs[i] * weights[i]
+        return result
+
+    def transfer_activation_value(self, activation: float):
+        # SIGMOID
+        return 1 / (1.0 + math.exp(-activation))
+
+    def forward_propogate(self, inputs: list):
+        hidden_layer_outputs = []
+        for neuron in self.hidden_layer:
+            activation_value = self.activate(weights=neuron.weights, inputs=inputs, bias=neuron.bias)
+            neuron_output = self.transfer_activation_value(activation_value)
+            hidden_layer_outputs.append(neuron_output)
+
+        final_outputs = []
+        for neuron in self.output_layer:
+            activation_value = self.activate(weights=neuron.weights, inputs=hidden_layer_outputs, bias=neuron.bias)
+            neuron_output = self.transfer_activation_value(activation_value)
+            final_outputs.append(neuron_output)
+
+        return final_outputs
 
     def __str__(self):
         hidden_layer = f"hidden_layer: {[str(neuron) for neuron in self.hidden_layer]}"
@@ -54,6 +80,13 @@ class NeuralNetwork:
         return f"{hidden_layer}\n{output_layer}"
 
 
-network = NeuralNetwork(2, 1, 2)
-
+network = NeuralNetwork(n_inputs=2, n_hidden=2, n_outputs=2)
 print(network)
+print("\n")
+
+sample_input = [1, 0]
+result = network.forward_propogate(sample_input)
+print(result)
+
+
+
