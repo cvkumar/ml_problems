@@ -88,25 +88,28 @@ class NeuralNetwork:
     def backward_propogate_error(self, expected):
         # for i in reversed(range(len(self.output_layer))):
         layer = self.output_layer
-        errors = []
+        output_layer_errors = []
 
         for j in range(len(self.output_layer)):
             neuron = layer[j]
-            errors.append(expected[j] - neuron.output)
+            output_layer_errors.append(expected[j] - neuron.output)
 
         for j in range(len(self.output_layer)):
             neuron = layer[j]
-            neuron.delta = errors[j] * self.transfer_derivative(neuron.output)
+            neuron.delta = output_layer_errors[j] * self.transfer_derivative(neuron.output)
 
+        hidden_layer_errors = []
         for j in range(len(self.hidden_layer)):
             error = 0.0
             for neuron in self.output_layer:
+                # neuron delta: -0.14619064683582808 <- This VAL must be correct
+                # neuron weights: 0.2550690257394217
                 error += (neuron.weights[j] * neuron.delta)
-            errors.append(error)
+            hidden_layer_errors.append(error)
 
         for j in range(len(self.hidden_layer)):
             neuron = self.hidden_layer[j]
-            neuron.delta = errors[j] * self.transfer_derivative(neuron.output)
+            neuron.delta = hidden_layer_errors[j] * self.transfer_derivative(neuron.output)
 
         # print(errors)
         # for j in range(len(self.hidden_layer)):
