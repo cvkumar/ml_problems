@@ -155,6 +155,10 @@ class NeuralNetwork:
                 ">epoch=%d, lrate=%.3f, error=%.3f" % (epoch, learning_rate, sum_error)
             )
 
+    def predict(self, inputs):
+        outputs = self.forward_propogate(inputs=inputs)
+        return outputs.index(max(outputs))
+
     def __str__(self):
         hidden_layer = f"hidden_layer: {[str(neuron) for neuron in self.hidden_layer]}"
         output_layer = f"output_layer: {[str(neuron) for neuron in self.output_layer]}"
@@ -232,5 +236,13 @@ if __name__ == "__main__":
     n_outputs = len(set([row[-1] for row in dataset]))
     network = NeuralNetwork(n_inputs=n_inputs, n_hidden=2, n_outputs=n_outputs)
     network.train_network(
-        dataset=dataset, learning_rate=0.5, n_epoch=100, n_outputs=n_outputs
+        dataset=dataset, learning_rate=5, n_epoch=100, n_outputs=n_outputs
     )
+    print(network)
+    """
+    [{'weights': [-1.4688375095432327, 1.850887325439514, 1.0858178629550297], 'output': 0.029980305604426185, 'delta': -0.0059546604162323625}, {'weights': [0.37711098142462157, -0.0625909894552989, 0.2765123702642716], 'output': 0.9456229000211323, 'delta': 0.0026279652850863837}]
+[{'weights': [2.515394649397849, -0.3391927502445985, -0.9671565426390275], 'output': 0.23648794202357587, 'delta': -0.04270059278364587}, {'weights': [-2.5584149848484263, 1.0036422106209202, 0.42383086467582715], 'output': 0.7790535202438367, 'delta': 0.03803132596437354}]
+    """
+    for inputs in dataset:
+        prediction = network.predict(inputs)
+        print("Expected=%d, Got=%d" % (inputs[-1], prediction))
