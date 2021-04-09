@@ -20,11 +20,11 @@ df = pd.read_csv("data/seeds/wheat-seeds.csv")
 
 
 class Neuron:
-    def __init__(self, weights, bias=None):
+    def __init__(self, weights, bias=None, output=None):
         self.bias = bias or random.random()
         self.weights = weights
         self.delta = 0
-        self.output = 0
+        self.output = output or 0
 
     def __str__(self):
         return f"weights: {self.weights}, bias: {self.bias}, delta: {self.delta}, output: {self.output}"
@@ -108,7 +108,7 @@ class NeuralNetwork:
             neuron = self.hidden_layer[j]
             neuron.delta = errors[j] * self.transfer_derivative(neuron.output)
 
-        print(errors)
+        # print(errors)
         # for j in range(len(self.hidden_layer)):
 
 
@@ -119,7 +119,12 @@ class NeuralNetwork:
         output_layer = f"output_layer: {[str(neuron) for neuron in self.output_layer]}"
         return f"{hidden_layer}\n{output_layer}"
 
+# from sample problem: https://machinelearningmastery.com/implement-backpropagation-algorithm-scratch-python/
+# [[{'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614]}],
+# [{'weights': [0.2550690257394217, 0.49543508709194095]}, {'weights': [0.4494910647887381, 0.651592972722763]}]]
 network = NeuralNetwork(n_inputs=2, n_hidden=1, n_outputs=2)
+network.hidden_layer = [Neuron(weights=[0.13436424411240122, 0.8474337369372327], bias=0.763774618976614)]
+network.output_layer = [Neuron(weights=[0.2550690257394217], bias=0.49543508709194095), Neuron(weights=[0.4494910647887381], bias=0.651592972722763)]
 print(network)
 print("")
 
@@ -127,11 +132,22 @@ sample_input = [1, 0]
 result = network.forward_propogate(sample_input)
 print("Forward propogate result")
 print(result)
+# Should be [0.6629970129852887, 0.7253160725279748]
 print("")
 
 sample_expected_output = [0, 1]
+"""
+network = [[{'output': 0.7105668883115941, 'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614]}],
+		[{'output': 0.6213859615555266, 'weights': [0.2550690257394217, 0.49543508709194095]}, {'output': 0.6573693455986976, 'weights': [0.4494910647887381, 0.651592972722763]}]]
+"""
+network.hidden_layer = [Neuron(weights=[0.13436424411240122, 0.8474337369372327], bias=0.763774618976614, output=0.7105668883115941)]
+network.output_layer = [Neuron(weights=[0.2550690257394217], bias=0.49543508709194095, output=0.6213859615555266), Neuron(weights=[0.4494910647887381], bias=0.651592972722763, output=0.6573693455986976)]
 network.backward_propogate_error(sample_expected_output)
 print("network after back propogating")
 print(network)
+"""
+[{'output': 0.7105668883115941, 'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614], 'delta': -0.0005348048046610517}]
+[{'output': 0.6213859615555266, 'weights': [0.2550690257394217, 0.49543508709194095], 'delta': -0.14619064683582808}, {'output': 0.6573693455986976, 'weights': [0.4494910647887381, 0.651592972722763], 'delta': 0.0771723774346327}]
+"""
 print("")
 
