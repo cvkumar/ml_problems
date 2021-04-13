@@ -8,6 +8,7 @@ import pandas as pd
 
 import math
 
+from sklearn import metrics
 from sklearn.model_selection import train_test_split
 
 RANDOM_STATE = 1
@@ -131,8 +132,26 @@ class NeuralNetwork:
                 neuron.weights[j] += learning_rate * neuron.delta * inputs[j]
             neuron.bias += learning_rate * neuron.delta
 
+    def evaluate_dataset(self, dataset):
+        predictions = []
+        truth_labels = []
+        for inputs in dataset:
+            prediction = self.predict(inputs=inputs)
+            predictions.append(int(prediction))
+            truth_labels.append(int(inputs[-1]))
+
+        print(
+            metrics.classification_report(
+                y_true=truth_labels, y_pred=predictions, digits=3
+            )
+        )
+        print("Overall accuracy was:")
+        print(accuracy_metric(truth_labels, predictions))
+
     # NOTE: Mostly tested
-    def train_network(self, dataset, learning_rate, n_epoch, n_outputs):
+    def train_network(
+        self, dataset, learning_rate, n_epoch, n_outputs, evaluation_dataset=None
+    ):
         for epoch in range(n_epoch):
             sum_error = 0
             for inputs in dataset:
@@ -154,6 +173,12 @@ class NeuralNetwork:
             print(
                 ">epoch=%d, lrate=%.3f, error=%.3f" % (epoch, learning_rate, sum_error)
             )
+            if evaluation_dataset and epoch % 10 == 0:
+                self.evaluate_dataset(evaluation_dataset)
+
+        if evaluation_dataset:
+            print("Final evaluation")
+            self.evaluate_dataset(evaluation_dataset)
 
     def predict(self, inputs: list):
         outputs = self.forward_propogate(inputs=inputs)
@@ -181,6 +206,14 @@ def normalize_dataset(dataset, minmax):
     for row in dataset:
         for i in range(len(row) - 1):
             row[i] = (row[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])
+
+
+def accuracy_metric(actual, predicted):
+    correct = 0
+    for i in range(len(actual)):
+        if actual[i] == predicted[i]:
+            correct += 1
+    return correct / float(len(actual)) * 100.0
 
 
 if __name__ == "__main__":
@@ -265,6 +298,7 @@ if __name__ == "__main__":
     #         prediction = network.predict(inputs)
     #         print("Expected=%d, Got=%d" % (inputs[-1], prediction))
     #
+    # TODO: Debug why test/validation set scoring super low
     df = pd.read_csv("data/seeds/wheat-seeds.csv", header=None)
     learning_rate = 0.3
     n_epoch = 500
@@ -277,12 +311,19 @@ if __name__ == "__main__":
     validation_df, test_df = train_test_split(temp_df, test_size=0.5)
 
     train_df_list = train_df.values.tolist()
+    validation_df_list = validation_df.values.tolist()
+    test_df_list = test_df.values.tolist()
     # normalize input variables
     minmax = dataset_minmax(train_df_list)
     normalize_dataset(dataset=train_df_list, minmax=minmax)
+
     network.train_network(
-        dataset=train_df_list,
+        dataset=train_df_list + validation_df_list + test_df_list,
         learning_rate=learning_rate,
         n_epoch=n_epoch,
         n_outputs=n_outputs,
+        # evaluation_dataset=validation_df_list + test_df_list,
     )
+
+    network.evaluate_dataset(dataset=train_df_list + validation_df_list + test_df_list)
+    # network.evaluate_dataset(dataset=validation_df_list + test_df_list)
