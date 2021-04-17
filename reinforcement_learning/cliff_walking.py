@@ -40,7 +40,13 @@ class WindyCliffWalkingEnv(discrete.DiscreteEnv):
         self.wind_prob = wind_prob
 
         self.desc = np.asarray(
-            ["RRRRRRRRRRRR", "RRRRRRRRRRRR", "RRRRRRRRRRRR", "SCCCCCCCCCCG",], dtype="c"
+            [
+                "RRRRRRRRRRRR",
+                "RRRRRRRRRRRR",
+                "RRRRRRRRRRRR",
+                "SCCCCCCCCCCG",
+            ],
+            dtype="c",
         )
 
         nS = np.prod(self.shape)

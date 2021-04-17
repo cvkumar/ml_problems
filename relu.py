@@ -15,9 +15,7 @@ that it may have very little effect.
 
 
 def compute_relu(num: float) -> float:
-    """
-
-    """
+    """"""
     return max(0.0, num)
 
 

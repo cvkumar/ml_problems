@@ -45,10 +45,23 @@ def get_mse(x_train, title):
         )
         pca_mse.append(pca.get_mse(i + 1, x_train))
     for i in range(x_train.shape[1]):
-        ica = ICARunner(x_train, None, title="ICA", seed=42, plot=False,)
+        ica = ICARunner(
+            x_train,
+            None,
+            title="ICA",
+            seed=42,
+            plot=False,
+        )
         ica_mse.append(ica.get_mse(i + 1, x_train))
     grp = GRPRunner(
-        x_train, None, None, None, n_iterations=20, title="GRP", seed=42, plot=False,
+        x_train,
+        None,
+        None,
+        None,
+        n_iterations=20,
+        title="GRP",
+        seed=42,
+        plot=False,
     )
     grp_mse = grp.get_num_components(return_mse=True)
     plot_mse([ica_mse, pca_mse, grp_mse], x_train.shape[1], title)

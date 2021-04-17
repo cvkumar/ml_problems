@@ -14,9 +14,7 @@ import math
 
 
 def compute_softmax(vector: List[float]) -> List[float]:
-    """
-
-    """
+    """"""
     list_e_x = [math.exp(e_x) for e_x in vector]
     total = sum(list_e_x)
     return [e_x / total for e_x in list_e_x]

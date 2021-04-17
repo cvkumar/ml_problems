@@ -81,7 +81,11 @@ class ExpectationMaximizationTestCluster:
         model = GMM(n_components=self.targetcluster, covariance_type="full")
         labels = model.fit_predict(X_new)
         totz = np.concatenate(
-            (X_new, np.expand_dims(labels, axis=1), np.expand_dims(self.y, axis=1),),
+            (
+                X_new,
+                np.expand_dims(labels, axis=1),
+                np.expand_dims(self.y, axis=1),
+            ),
             axis=1,
         )
 
