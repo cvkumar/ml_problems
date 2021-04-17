@@ -49,38 +49,38 @@ CATEGORIES = [
     "Highlights",
 ]
 CATEGORY_DICT = {
-    "Special Occasion Makeup": {"predict_percent": 0.93},
-    "Twists": {"predict_percent": 0.89},
-    "Special Occasion Style": {"predict_percent": 0.83},
-    "Relaxers": {"predict_percent": 0.70},
-    "Massage": {"predict_percent": 0.90},
-    "Knots": {"predict_percent": 0.95},
-    "Locs": {"predict_percent": 0.7},
-    "Curling Treatments": {"predict_percent": 0.99},
-    "Braids": {"predict_percent": 0.57},
-    "Manicure": {"predict_percent": 0.57},
-    "Women's Haircut": {"predict_percent": 0.51},
-    "Natural Hair": {"predict_percent": 0.72},
-    "Hair Color": {"predict_percent": 0.52},
-    "Weaves": {"predict_percent": 0.61},
-    "Eyelashes": {"predict_percent": 0.61},
-    "Men's Color": {"predict_percent": 0.93},
-    "Sugaring": {"predict_percent": 0.94},
-    "Chemical Perms": {"predict_percent": 0.82},
-    "Pedicure": {"predict_percent": 0.65},
+    "Special Occasion Makeup": {"predict_percent": 0.92},
+    "Twists": {"predict_percent": 0.86},
+    "Special Occasion Style": {"predict_percent": 0.80},
+    "Relaxers": {"predict_percent": 0.66},
+    "Massage": {"predict_percent": 0.87},
+    "Knots": {"predict_percent": 0.95}, # DC
+    "Locs": {"predict_percent": 0.67},
+    "Curling Treatments": {"predict_percent": 0.99}, # DC
+    "Braids": {"predict_percent": 0.6},
+    "Manicure": {"predict_percent": 0.6},
+    "Women's Haircut": {"predict_percent": 0.53},
+    "Natural Hair": {"predict_percent": 0.73},
+    "Hair Color": {"predict_percent": 0.535},
+    "Weaves": {"predict_percent": 0.63},
+    "Eyelashes": {"predict_percent": 0.64},
+    "Men's Color": {"predict_percent": 0.93}, # DC
+    "Sugaring": {"predict_percent": 0.9},
+    "Chemical Perms": {"predict_percent": 0.8},
+    "Pedicure": {"predict_percent": 0.66},
     "Extensions": {"predict_percent": 0.55},
-    "Eyebrows": {"predict_percent": 0.51},
-    "Makeup": {"predict_percent": 0.77},
-    "Sets & Styles": {"predict_percent": 0.72},
-    "Style": {"predict_percent": 0.58},
-    "Barber": {"predict_percent": 0.57},
-    "Men's Haircut": {"predict_percent": 0.57},
-    "Wellness": {"predict_percent": 0.88},
-    "Hair Treatments": {"predict_percent": 0.63},
-    "Skincare": {"predict_percent": 0.71},
-    "Waxing": {"predict_percent": 0.62},
-    "Straightening Treatments": {"predict_percent": 0.77},
-    "Highlights": {"predict_percent": 0.55},
+    "Eyebrows": {"predict_percent": 0.55},
+    "Makeup": {"predict_percent": 0.74},
+    "Sets & Styles": {"predict_percent": 0.73},
+    "Style": {"predict_percent": 0.595},
+    "Barber": {"predict_percent": 0.58},
+    "Men's Haircut": {"predict_percent": 0.595},
+    "Wellness": {"predict_percent": 0.88}, # DC
+    "Hair Treatments": {"predict_percent": 0.645},
+    "Skincare": {"predict_percent": 0.68},
+    "Waxing": {"predict_percent": 0.64},
+    "Straightening Treatments": {"predict_percent": 0.74},
+    "Highlights": {"predict_percent": 0.59},
 }
 
 
@@ -341,4 +341,5 @@ if __name__ == "__main__":
 """
 correct: 835, incorrect: 2765, accuracy: 0.23194444444444445
 
+correct: 988, incorrect: 2612, accuracy: 0.27444444444444444
 """
