@@ -271,6 +271,7 @@ if __name__ == "__main__":
 
     category_to_score = {category: {'tp': 0, 'fp': 0, 'fn': 0, 'tn': 0} for category in categories}
 
+    # COMPUTE METRICS
     for i in range(len(final_predictions)):
         prediction = str(final_predictions[i])
         truth_category = test_service_categories[i]
@@ -336,10 +337,50 @@ if __name__ == "__main__":
         print(f"Scores for category {category} - f1: {f1}, recall: {recall}, precision: {precision}, accuracy: {accuracy}")
 
     print("")
-    print(f"program took: {time.time() - start_time} seconds")
 
+
+    final_df = pd.read_csv('data/styleseat/testing_data.csv')
+    final_service_names = list(final_df['service_name'])
+    final_predictions = [[] for x in final_service_names]
+
+    for category in categories:
+        model = category_to_model[category]
+        tokenizer = category_to_tokenizer[category]
+
+        final_sequences = tokenizer.texts_to_sequences(final_service_names)
+        final_padded = pad_sequences(
+            final_sequences,
+            maxlen=max_length,
+            padding=padding_type,
+            truncating=trunc_type,
+        )
+
+        category_predictions_raw = model.predict(final_padded)
+        category_predictions = [
+            1 if prediction[0] > CATEGORY_DICT[category]['predict_percent'] else 0 for prediction in category_predictions_raw
+        ]
+
+        for i in range(len(category_predictions)):
+            prediction = category_predictions[i]
+            if prediction == 1:
+                final_predictions[i].append(category)
+
+    for i in range(len(final_predictions)):
+        final_predictions[i] = ", ".join(final_predictions[i])
+
+    final_df['service_category'] = final_predictions
+
+    # final_df.to_csv("data/styleseat/output_test_data.csv", index=False)
+
+    # for category in categories:
+    #     model = category_to_model[category]
+    #     model.save_weights(filepath=f"data/styleseat/models/{category}")
+
+    print(f"program took: {time.time() - start_time} seconds")
 """
 correct: 835, incorrect: 2765, accuracy: 0.23194444444444445
 
 correct: 988, incorrect: 2612, accuracy: 0.27444444444444444
+
+correct: 989, incorrect: 2611, accuracy: 0.2747222222222222
 """
