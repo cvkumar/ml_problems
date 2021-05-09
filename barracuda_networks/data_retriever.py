@@ -34,7 +34,7 @@ def print_most_common_words(n=100):
     temp = [{'index': k, 'count': v} for k, v in word_index_to_count.items()]
     sorted_word_index_to_count = sorted(temp, key=lambda x: x['count'], reverse=True)
     for word_index_to_count in sorted_word_index_to_count[0:n]:
-        print(f"index: {word_index_to_count['index']}, count: {word_index_to_count['count']}, 'word': {vocab[word_index_to_count['index']]}")
+        print(f"word: {vocab[word_index_to_count['index']]}, count: {word_index_to_count['count']}, index: {word_index_to_count['index']}, ")
 
 
 if __name__ == "__main__":
